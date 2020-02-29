@@ -1,0 +1,6 @@
+{
+    "name": "macpc/wc-api",
+    "require": {
+        "automattic/woocommerce": "^3.0"
+    }
+}
