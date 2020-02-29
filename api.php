@@ -36,6 +36,21 @@ $this->response($this->json($data), 200);
 
 }
 
+public function getCurrency()
+{
+  header('Access-Control-Allow-Origin: *');
+  $woocommerce = new Client(
+      'http://localhost/estore',
+      'ck_3423fc86a9f5d87a3a6b7497ffbabf19874bed26',
+      'cs_99d395dcf77339c27cd92c97f04fca804c525fa8',
+      [
+          'version' => 'wc/v3',
+      ]
+  );
+ $currency = $woocommerce->get('data/currencies/current');
+$data = array('response_code' => "Success",'response_data' => $currency);
+$this->response($this->json($data), 200);
+}
 /*
 		 *	Encode array into JSON
 		*/
