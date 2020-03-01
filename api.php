@@ -35,6 +35,39 @@ $data = array('response_code' => "Success",'response_data' => $categories);
 $this->response($this->json($data), 200);
 
 }
+public function getProducts()
+{
+  header('Access-Control-Allow-Origin: *');
+  $woocommerce = new Client(
+      'http://localhost/estore',
+      'ck_3423fc86a9f5d87a3a6b7497ffbabf19874bed26',
+      'cs_99d395dcf77339c27cd92c97f04fca804c525fa8',
+      [
+          'version' => 'wc/v3',
+      ]
+  );
+   $category_id = $_REQUEST['category_id'];
+ $products = $woocommerce->get('products');
+$data = array('response_code' => "Success",'response_data' => $products);
+$this->response($this->json($data), 200);
+}
+
+public function getSingleproduct()
+{
+  header('Access-Control-Allow-Origin: *');
+  $woocommerce = new Client(
+      'http://localhost/estore',
+      'ck_3423fc86a9f5d87a3a6b7497ffbabf19874bed26',
+      'cs_99d395dcf77339c27cd92c97f04fca804c525fa8',
+      [
+          'version' => 'wc/v3',
+      ]
+  );
+   $product_id = $_REQUEST['product_id'];
+ $product = $woocommerce->get('products/'.$product_id);
+$data = array('response_code' => "Success",'response_data' => $product);
+$this->response($this->json($data), 200);
+}
 
 public function getCurrency()
 {
