@@ -84,6 +84,154 @@ public function getCurrency()
 $data = array('response_code' => "Success",'response_data' => $currency);
 $this->response($this->json($data), 200);
 }
+public function addtoCart()
+{
+  header('Access-Control-Allow-Origin: *');
+  $woocommerce = new Client(
+      'http://localhost/estore',
+      'ck_3423fc86a9f5d87a3a6b7497ffbabf19874bed26',
+      'cs_99d395dcf77339c27cd92c97f04fca804c525fa8',
+      [
+          'version' => 'wc/v2',
+      ]
+  );
+  $product_id = $_REQUEST['product_id'];
+  $qty = $_REQUEST['quantity'];
+  $args = array(
+    'product_id' => $product_id,
+    'quantity' => $qty
+  );
+  $response = $woocommerce->post('cart/add', $args );
+  //$response = $woocommerce->( 'http://localhost/estore/wp-json/cocart/v1/add-item', $args );
+  $data = array('response_code' => "Success",'response_data' => $response);
+  $this->response($this->json($data), 200);
+}
+
+public function getcartTotal()
+{
+  header('Access-Control-Allow-Origin: *');
+  $woocommerce = new Client(
+      'http://localhost/estore',
+      'ck_3423fc86a9f5d87a3a6b7497ffbabf19874bed26',
+      'cs_99d395dcf77339c27cd92c97f04fca804c525fa8',
+      [
+          'version' => 'wc/v2',
+      ]
+  );
+ $total = $woocommerce->get('cart/totals');
+$data = array('response_code' => "Success",'response_data' => $total);
+$this->response($this->json($data), 200);
+}
+
+public function getcartCalculate()
+{
+  //https://docs.cocart.xyz/wc-api-v2.html#update-item-in-cart
+  header('Access-Control-Allow-Origin: *');
+  $woocommerce = new Client(
+      'http://localhost/estore',
+      'ck_3423fc86a9f5d87a3a6b7497ffbabf19874bed26',
+      'cs_99d395dcf77339c27cd92c97f04fca804c525fa8',
+      [
+          'version' => 'wc/v2',
+      ]
+  );
+  $args = array();
+ $response = $woocommerce->post('cart/calculate',$args);
+$data = array('response_code' => "Success",'response_data' => $response);
+$this->response($this->json($data), 200);
+}
+
+public function getcartcountitem()
+{
+  header('Access-Control-Allow-Origin: *');
+  $woocommerce = new Client(
+      'http://localhost/estore',
+      'ck_3423fc86a9f5d87a3a6b7497ffbabf19874bed26',
+      'cs_99d395dcf77339c27cd92c97f04fca804c525fa8',
+      [
+          'version' => 'wc/v2',
+      ]
+  );
+ $total = $woocommerce->get('cart/count-items');
+$data = array('response_code' => "Success",'response_data' => $total);
+$this->response($this->json($data), 200);
+}
+
+public function getcartdetails()
+{
+  header('Access-Control-Allow-Origin: *');
+  $woocommerce = new Client(
+      'http://localhost/estore',
+      'ck_3423fc86a9f5d87a3a6b7497ffbabf19874bed26',
+      'cs_99d395dcf77339c27cd92c97f04fca804c525fa8',
+      [
+          'version' => 'wc/v2',
+      ]
+  );
+  $response = $woocommerce->get('cart');
+ $data = array('response_code' => "Success",'response_data' => $response);
+ $this->response($this->json($data), 200);
+}
+
+public function updateCart()
+{
+  header('Access-Control-Allow-Origin: *');
+  $woocommerce = new Client(
+      'http://localhost/estore',
+      'ck_3423fc86a9f5d87a3a6b7497ffbabf19874bed26',
+      'cs_99d395dcf77339c27cd92c97f04fca804c525fa8',
+      [
+          'version' => 'wc/v2',
+      ]
+  );
+  $cart_item_key = $_REQUEST['cart_item_key'];
+  $qty = $_REQUEST['quantity'];
+  $args = array(
+    'cart_item_key' => $cart_item_key,
+    'quantity' => $qty
+  );
+  $response = $woocommerce->post('cart/cart-item', $args );
+  $data = array('response_code' => "Success",'response_data' => $response);
+  $this->response($this->json($data), 200);
+}
+
+public function removeCartitem()
+{
+  header('Access-Control-Allow-Origin: *');
+  $woocommerce = new Client(
+      'http://localhost/estore',
+      'ck_3423fc86a9f5d87a3a6b7497ffbabf19874bed26',
+      'cs_99d395dcf77339c27cd92c97f04fca804c525fa8',
+      [
+          'version' => 'wc/v2',
+      ]
+  );
+  $cart_item_key = $_REQUEST['cart_item_key'];
+  $args = array(
+    'cart_item_key' => $cart_item_key
+  );
+  $response = $woocommerce->delete('cart/cart-item', $args );
+  $data = array('response_code' => "Success",'response_data' => $response);
+  $this->response($this->json($data), 200);
+}
+
+public function clearCart()
+{
+  header('Access-Control-Allow-Origin: *');
+  $woocommerce = new Client(
+      'http://localhost/estore',
+      'ck_3423fc86a9f5d87a3a6b7497ffbabf19874bed26',
+      'cs_99d395dcf77339c27cd92c97f04fca804c525fa8',
+      [
+          'version' => 'wc/v2',
+      ]
+  );
+  $args = array();
+  $response = $woocommerce->post('cart/clear',$args);
+  $data = array('response_code' => "Success",'response_data' => $response);
+  $this->response($this->json($data), 200);
+}
+
 /*
 		 *	Encode array into JSON
 		*/
